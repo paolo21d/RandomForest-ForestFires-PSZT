@@ -1,7 +1,10 @@
 package model;
 
-import com.sun.tools.javac.util.Pair;
+//import com.sun.tools.javac.util.Pair;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.ArrayList;
@@ -86,7 +89,7 @@ public class DecisionTree {
         Set<Double> divisionPoints = new HashSet<>();
         for (Sample sample : samples) {
             Argument arg = sample.getArgumentByType(argumentType);
-            sampleArgumentPairs.add(new Pair<>(sample, arg));
+            sampleArgumentPairs.add(new ImmutablePair<>(sample, arg));
             Double value = arg.getValue();
             divisionPoints.add(value);
         }
@@ -94,27 +97,27 @@ public class DecisionTree {
         List<Sample> left = new ArrayList<>();
         List<Sample> right = new ArrayList<>();
 
-        Pair<Double, Double> divisionWithMinCF = new Pair<>(0.0, Double.MAX_VALUE); //division point, cost function for this division
+        Pair<Double, Double> divisionWithMinCF = new ImmutablePair<>(0.0, Double.MAX_VALUE); //division point, cost function for this division
 
         for (Double divisionPoint : divisionPoints) {
             left.clear();
             right.clear();
 
             for (Pair<Sample, Argument> sampleArgumentPair : sampleArgumentPairs) {
-                if (sampleArgumentPair.snd.getValue() < divisionPoint) {
-                    left.add(sampleArgumentPair.fst);
+                if (sampleArgumentPair.getRight().getValue() < divisionPoint) {
+                    left.add(sampleArgumentPair.getLeft());
                 } else {
-                    right.add(sampleArgumentPair.fst);
+                    right.add(sampleArgumentPair.getLeft());
                 }
             }
 
             Double costFunction = countCF(left, right);
-            if (costFunction < divisionWithMinCF.snd) {
-                divisionWithMinCF = new Pair<>(divisionPoint, costFunction);
+            if (costFunction < divisionWithMinCF.getRight()) {
+                divisionWithMinCF = new ImmutablePair<>(divisionPoint, costFunction);
             }
         }
 
-        return divisionWithMinCF.fst;
+        return divisionWithMinCF.getLeft();
     }
 
     private Double countCF(Argument.ArgumentType argumentType, List<Sample> samples, Double divisionPoint) {

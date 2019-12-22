@@ -4,6 +4,7 @@ import exception.ReadFileException;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,7 +18,7 @@ public class Sample {
     //X, Y, ffmc, dmc, dc, isi, temp, rh, wind, rain
     //jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec,
     //mon, tue, wed, thu, fri, sat, sun,
-    private List<Argument> arguments;
+    private List<Argument> arguments = new ArrayList<>();
 
 /*    public Sample(Double argX, Double argY, String argMonth, String argDay, Double argFfmc, Double argDmc,
                   Double argDc, Double argIsi, Double argTemp, Double argRh, Double argWind, Double argRain,
