@@ -45,4 +45,5 @@ public class Argument {
         type = argumentType;
         value = 0.0;
     }
+
 }
