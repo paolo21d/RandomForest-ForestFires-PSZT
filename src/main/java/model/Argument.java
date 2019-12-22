@@ -9,8 +9,25 @@ public class Argument {
     public enum ArgumentType {
         X,
         Y,
-        MONTH,
-        DAY,
+        JAN,
+        FEB,
+        MAR,
+        APR,
+        MAY,
+        JUN,
+        JUL,
+        AUG,
+        SEP,
+        OCT,
+        NOV,
+        DEC,
+        MON,
+        TUE,
+        WED,
+        THU,
+        FRI,
+        SAT,
+        SUN,
         FFMC,
         DMC,
         DC,
@@ -23,4 +40,9 @@ public class Argument {
 
     private ArgumentType type;
     private Double value;
+
+    public Argument(ArgumentType argumentType) {
+        type = argumentType;
+        value = 0.0;
+    }
 }
