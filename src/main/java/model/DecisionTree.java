@@ -1,7 +1,8 @@
 package model;
 
-//import com.sun.tools.javac.util.Pair;
-
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Pair;
@@ -12,11 +13,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
+@Data
 public class DecisionTree {
 
     Node root;
     Long maxDepth = 29L;
+    List<Argument.ArgumentType> argumentTypes = new ArrayList<>();
 
+    public void restoreNodesParent() {
+        recursiveRestoreParent(null, root);
+    }
+    private void recursiveRestoreParent(Node parent, Node currentNode) {
+        if(currentNode == null)
+            return;
+        currentNode.setParent(parent);
+        recursiveRestoreParent(currentNode, currentNode.getLowerSon());
+        recursiveRestoreParent(currentNode, currentNode.getBiggerSon());
+    }
 
     public void buildTree(List<Argument.ArgumentType> argumentTypes, List<Sample> samples) {
         root = ID3(argumentTypes, samples, null, 0L);
