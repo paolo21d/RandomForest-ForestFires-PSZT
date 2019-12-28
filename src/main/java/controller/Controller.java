@@ -15,7 +15,8 @@ public class Controller {
     public static void main(String[] args){
         try {
             //saveForest();
-            RandomForest forest = loadForest();
+            //RandomForest forest = loadForest();
+            System.out.println(result());
             System.out.println("END");
         } catch (IOException e) {
             e.printStackTrace();
@@ -26,41 +27,8 @@ public class Controller {
         SamplesImporter importer = new SamplesImporter();
         List<Sample> samples = importer.readSamplesFromFile("src/main/resources/shortData.txt");
         DecisionTree decisionTree = new DecisionTree();
-        List<Argument.ArgumentType> argumentTypes = new ArrayList<>();
-        ///
-        argumentTypes.add(Argument.ArgumentType.X);
-        argumentTypes.add(Argument.ArgumentType.Y);
-        argumentTypes.add(Argument.ArgumentType.FFMC);
-        argumentTypes.add(Argument.ArgumentType.DMC);
-        argumentTypes.add(Argument.ArgumentType.DC);
-        argumentTypes.add(Argument.ArgumentType.ISI);
-        argumentTypes.add(Argument.ArgumentType.TEMP);
-        argumentTypes.add(Argument.ArgumentType.RH);
-        argumentTypes.add(Argument.ArgumentType.WIND);
-        argumentTypes.add(Argument.ArgumentType.RAIN) ;
+        List<Argument.ArgumentType> argumentTypes = Argument.getAllTypes();
 
-        argumentTypes.add(Argument.ArgumentType.JAN);
-        argumentTypes.add(Argument.ArgumentType.FEB);
-        argumentTypes.add(Argument.ArgumentType.MAR);
-        argumentTypes.add(Argument.ArgumentType.APR);
-        argumentTypes.add(Argument.ArgumentType.MAY);
-        argumentTypes.add(Argument.ArgumentType.JUN);
-        argumentTypes.add(Argument.ArgumentType.JUL);
-        argumentTypes.add(Argument.ArgumentType.AUG);
-        argumentTypes.add(Argument.ArgumentType.SEP);
-        argumentTypes.add(Argument.ArgumentType.OCT);
-        argumentTypes.add(Argument.ArgumentType.NOV);
-        argumentTypes.add(Argument.ArgumentType.DEC);
-
-        argumentTypes.add(Argument.ArgumentType.MON);
-        argumentTypes.add(Argument.ArgumentType.TUE);
-        argumentTypes.add(Argument.ArgumentType.WED);
-        argumentTypes.add(Argument.ArgumentType.THU);
-        argumentTypes.add(Argument.ArgumentType.FRI);
-        argumentTypes.add(Argument.ArgumentType.SAT);
-        argumentTypes.add(Argument.ArgumentType.SUN);
-
-        ///
         decisionTree.buildTree(argumentTypes, samples);
         return decisionTree;
     }
@@ -77,5 +45,12 @@ public class Controller {
         RandomForest forest = new RandomForest();
         forest.loadStructure();
         return forest;
+    }
+
+    private static Double result() throws IOException{
+        DecisionTree tree = buildDecisionTree();
+        Sample sample = new Sample(7.0, 5.0, "mar", "fri",
+                86.2, 26.2, 94.3, 5.1, 8.2, 51.0, 6.7, 0.0, null);
+        return tree.getResult(sample);
     }
 }

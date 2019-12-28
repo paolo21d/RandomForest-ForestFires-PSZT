@@ -25,12 +25,31 @@ public class DecisionTree {
     public void restoreNodesParent() {
         recursiveRestoreParent(null, root);
     }
+
     private void recursiveRestoreParent(Node parent, Node currentNode) {
-        if(currentNode == null)
+        if (currentNode == null)
             return;
         currentNode.setParent(parent);
         recursiveRestoreParent(currentNode, currentNode.getLowerSon());
         recursiveRestoreParent(currentNode, currentNode.getBiggerSon());
+    }
+
+    public Double getResult(Sample sample) {
+        return recursiveSearch(sample, root);
+    }
+
+    private Double recursiveSearch(Sample sample, Node node) {
+        if (node.getLowerSon() == null && node.getBiggerSon() == null) { //that's leaf
+            return node.getValue();
+        }
+
+        Argument divisionArgument = node.getDivisionArgument();
+        Double sampleValueOfArgument = sample.getArgumentByType(divisionArgument.getType()).getValue();
+        if(sampleValueOfArgument<divisionArgument.getValue()) {
+            return recursiveSearch(sample, node.getLowerSon());
+        } else {
+            return recursiveSearch(sample, node.getBiggerSon());
+        }
     }
 
     public void buildTree(List<Argument.ArgumentType> argumentTypes, List<Sample> samples) {
