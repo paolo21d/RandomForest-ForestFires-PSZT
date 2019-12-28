@@ -137,7 +137,7 @@ public class DecisionTree {
 
     private Double countCF(List<Sample> leftTree, List<Sample> rightTree) {
         int leftTreeSize = leftTree.size();
-        int rightTreeSize = leftTree.size();
+        int rightTreeSize = rightTree.size();
         int allTreeSize = leftTreeSize + rightTreeSize;
         Double left = countMSE(leftTree) * (double) (leftTreeSize / allTreeSize);
         Double right = countMSE(rightTree) * (double) (rightTreeSize / allTreeSize);
