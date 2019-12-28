@@ -45,7 +45,7 @@ public class DecisionTree {
 
         Argument divisionArgument = node.getDivisionArgument();
         Double sampleValueOfArgument = sample.getArgumentByType(divisionArgument.getType()).getValue();
-        if(sampleValueOfArgument<divisionArgument.getValue()) {
+        if (sampleValueOfArgument < divisionArgument.getValue()) {
             return recursiveSearch(sample, node.getLowerSon());
         } else {
             return recursiveSearch(sample, node.getBiggerSon());

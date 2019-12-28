@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @Getter
 @Setter
@@ -37,9 +38,17 @@ public class RandomForest {
         serializer.fromJSON(json.toString());
         decisionTrees = new ArrayList<>(serializer.getDecisionTrees());
 
-        for(DecisionTree tree: decisionTrees) {
+        for (DecisionTree tree : decisionTrees) {
             tree.restoreNodesParent();
         }
     }
 
+    public Double getResult(Sample sample) {
+        List<Double> results = new ArrayList<>();
+        for (DecisionTree tree : decisionTrees) {
+            results.add(tree.getResult(sample));
+        }
+        OptionalDouble average = results.stream().mapToDouble(a -> a).average();
+        return average.isPresent() ? average.getAsDouble() : 0;
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Controller {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try {
             //saveForest();
             //RandomForest forest = loadForest();
@@ -23,7 +23,7 @@ public class Controller {
         }
     }
 
-    private static DecisionTree buildDecisionTree() throws IOException{
+    private static DecisionTree buildDecisionTree() throws IOException {
         SamplesImporter importer = new SamplesImporter();
         List<Sample> samples = importer.readSamplesFromFile("src/main/resources/shortData.txt");
         DecisionTree decisionTree = new DecisionTree();
@@ -33,7 +33,7 @@ public class Controller {
         return decisionTree;
     }
 
-    private static void saveForest() throws IOException{
+    private static void saveForest() throws IOException {
         ArrayList<DecisionTree> decisionTrees = new ArrayList<>();
         decisionTrees.add(buildDecisionTree());
         RandomForest forest = new RandomForest();
@@ -47,7 +47,7 @@ public class Controller {
         return forest;
     }
 
-    private static Double result() throws IOException{
+    private static Double result() throws IOException {
         DecisionTree tree = buildDecisionTree();
         Sample sample = new Sample(7.0, 5.0, "mar", "fri",
                 86.2, 26.2, 94.3, 5.1, 8.2, 51.0, 6.7, 0.0, null);

@@ -117,7 +117,7 @@ public class Sample {
         arguments.add(new Argument(Argument.ArgumentType.TEMP, argTemp));
         arguments.add(new Argument(Argument.ArgumentType.RH, argRh));
         arguments.add(new Argument(Argument.ArgumentType.WIND, argWind));
-        arguments.add(new Argument(Argument.ArgumentType.RAIN, argRain)) ;
+        arguments.add(new Argument(Argument.ArgumentType.RAIN, argRain));
 
         arguments.add(new Argument(Argument.ArgumentType.JAN));
         arguments.add(new Argument(Argument.ArgumentType.FEB));
@@ -232,8 +232,8 @@ public class Sample {
     }
 
     public Argument getArgumentByType(Argument.ArgumentType type) {
-        for(Argument arg: arguments){
-            if(arg.getType().equals(type)){
+        for (Argument arg : arguments) {
+            if (arg.getType().equals(type)) {
                 return arg;
             }
         }

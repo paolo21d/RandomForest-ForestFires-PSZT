@@ -61,7 +61,7 @@ public class Argument {
         argumentTypes.add(Argument.ArgumentType.TEMP);
         argumentTypes.add(Argument.ArgumentType.RH);
         argumentTypes.add(Argument.ArgumentType.WIND);
-        argumentTypes.add(Argument.ArgumentType.RAIN) ;
+        argumentTypes.add(Argument.ArgumentType.RAIN);
 
         argumentTypes.add(Argument.ArgumentType.JAN);
         argumentTypes.add(Argument.ArgumentType.FEB);
