@@ -7,14 +7,34 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.Random;
 
 @Getter
 @Setter
 public class RandomForest {
     List<DecisionTree> decisionTrees;
 
-    public void buildRandomForest(List<Sample> samples, int treesQuantity) {
 
+    //TODO random forest
+    public void buildRandomForest(List<Sample> samples, int treesQuantity) {
+        Integer treeNumber =  (int) Math.ceil(Math.sqrt(samples.size()));
+        Integer argumentNumber = (int) Math.floor(treeNumber);
+        List<Argument.ArgumentType> argumentTypes = Argument.getAllTypes();
+        Random rand = new Random(1);
+
+        for (int i = 0; i < treeNumber; i++){
+            List<Sample> treeSamples = new ArrayList<>();
+            List<Argument.ArgumentType> argumentSample = new ArrayList<>();
+            for(int j = 0; j < treeNumber; j++){
+                treeSamples.add(samples.get(rand.nextInt(samples.size())));
+            }
+
+            for(int j = 0; j < argumentNumber; j++){
+                //TODO
+            }
+
+
+        }
     }
 
     public void saveStructure() throws IOException {

@@ -16,7 +16,9 @@ public class Controller {
         try {
             //saveForest();
             //RandomForest forest = loadForest();
-            System.out.println(result());
+            result();
+            saveForest();
+            //System.out.println(result());
             System.out.println("END");
         } catch (IOException e) {
             e.printStackTrace();
@@ -25,7 +27,7 @@ public class Controller {
 
     private static DecisionTree buildDecisionTree() throws IOException {
         SamplesImporter importer = new SamplesImporter();
-        List<Sample> samples = importer.readSamplesFromFile("src/main/resources/shortData.txt");
+        List<Sample> samples = importer.readSamplesFromFile("src/main/resources/dataToRead.txt");
         DecisionTree decisionTree = new DecisionTree();
         List<Argument.ArgumentType> argumentTypes = Argument.getAllTypes();
 
@@ -49,8 +51,13 @@ public class Controller {
 
     private static Double result() throws IOException {
         DecisionTree tree = buildDecisionTree();
-        Sample sample = new Sample(7.0, 5.0, "mar", "fri",
-                86.2, 26.2, 94.3, 5.1, 8.2, 51.0, 6.7, 0.0, null);
-        return tree.getResult(sample);
+        SamplesImporter samplesImporter = new SamplesImporter();
+        List<Sample> samples = samplesImporter.readSamplesFromFile("src/main/resources/dataToTest");
+        for(Sample sample : samples){
+            Double result = tree.getResult(sample);
+            System.out.println("Oczekiwana: " + sample.getResult() + " Przewidziana " + result);
+        }
+        return 0.0;
+        //return tree.getResult(sample);
     }
 }
