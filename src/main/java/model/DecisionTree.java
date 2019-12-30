@@ -19,7 +19,7 @@ import java.util.Set;
 public class DecisionTree {
 
     Node root;
-    Long maxDepth = 29L;
+    Long maxDepth = 10L;
     List<Argument.ArgumentType> argumentTypes = new ArrayList<>();
 
     public void restoreNodesParent() {
@@ -67,21 +67,21 @@ public class DecisionTree {
             leaf.countValue();
             leaf.setMSE(countMSE(samples));
             leaf.setSize(samples.size());
-            leaf.setSD(Math.sqrt(leaf.getMSE()/samples.size()));
+            leaf.setSD(Math.sqrt(leaf.getMSE() / samples.size()));
             return leaf;
         }
 
         //znalezienie argumentu podzialu
         Argument divisionArgument = findDivisionArgument(argumentTypes, samples);
 
-        if(divisionArgument == null){
+        if (divisionArgument == null) {
             Node leaf = new Node();
             leaf.setParent(parent);
             leaf.setSamples(samples);
             leaf.countValue();
             leaf.setMSE(countMSE(samples));
             leaf.setSize(samples.size());
-            leaf.setSD(Math.sqrt(leaf.getMSE()/samples.size()));
+            leaf.setSD(Math.sqrt(leaf.getMSE() / samples.size()));
             return leaf;
         }
 
@@ -104,8 +104,8 @@ public class DecisionTree {
         node.setDivisionArgument(divisionArgument);
         node.setSize(samples.size());
         node.setMSE(countMSE(samples));
-        node.setSD(Math.sqrt(node.getMSE()/samples.size()));
-        if(left.size() == 0 || right.size() == 0){
+        node.setSD(Math.sqrt(node.getMSE() / samples.size()));
+        if (left.size() == 0 || right.size() == 0) {
             return node;
         }
         node.setLowerSon(ID3(argumentTypes, left, node, depth + 1));
@@ -138,7 +138,7 @@ public class DecisionTree {
         }
         //System.out.println(countMSE(samples) + " " + minCF);
 
-        if(countMSE(samples) <= minCF) {
+        if (countMSE(samples) <= minCF) {
             //System.out.println("A tutaj co sie dzieje");
             return null;
         }
@@ -204,7 +204,7 @@ public class DecisionTree {
         int allTreeSize = leftTreeSize + rightTreeSize;
         //System.out.println(countMSE(leftTree) + " " + leftTreeSize + " " + countMSE(rightTree) + " " + rightTreeSize + " " + allTreeSize);
         Double left = countMSE(leftTree) * ((double) leftTreeSize / (double) allTreeSize);
-        Double right = countMSE(rightTree) * ((double) rightTreeSize / (double)allTreeSize);
+        Double right = countMSE(rightTree) * ((double) rightTreeSize / (double) allTreeSize);
         //System.out.println(left + right);
         return left + right;
     }

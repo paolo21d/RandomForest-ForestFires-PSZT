@@ -14,26 +14,35 @@ import java.util.Random;
 public class RandomForest {
     List<DecisionTree> decisionTrees;
 
-
-    //TODO random forest
-    public void buildRandomForest(List<Sample> samples, int treesQuantity) {
-        Integer treeNumber =  (int) Math.ceil(Math.sqrt(samples.size()));
-        Integer argumentNumber = (int) Math.floor(treeNumber);
+    public void buildRandomForest(List<Sample> samples) {
+        decisionTrees = new ArrayList<>();
+        Integer treeNumber = (int) Math.ceil(Math.sqrt(samples.size()));
+        Integer argumentNumber = (int) Math.floor(Math.sqrt(treeNumber));
         List<Argument.ArgumentType> argumentTypes = Argument.getAllTypes();
-        Random rand = new Random(1);
+        Random rand = new Random(1234567);
 
-        for (int i = 0; i < treeNumber; i++){
+        for (int i = 0; i < treeNumber; i++) {
             List<Sample> treeSamples = new ArrayList<>();
             List<Argument.ArgumentType> argumentSample = new ArrayList<>();
-            for(int j = 0; j < treeNumber; j++){
+
+            for (int j = 0; j < treeNumber; j++) {
                 treeSamples.add(samples.get(rand.nextInt(samples.size())));
             }
 
-            for(int j = 0; j < argumentNumber; j++){
-                //TODO
+            for (int j = 0; j < argumentNumber; j++) {
+                Argument.ArgumentType type = argumentTypes.get(rand.nextInt(argumentTypes.size()));
+                //Argument.ArgumentType type = argumentTypes.get(rand.nextInt(22));
+                while (argumentSample.contains(type)) {
+                    type = argumentTypes.get(rand.nextInt(argumentTypes.size()));
+                    //type = argumentTypes.get(rand.nextInt(22));
+                }
+
+                argumentSample.add(type);
             }
 
-
+            DecisionTree tree = new DecisionTree();
+            tree.buildTree(argumentSample, treeSamples);
+            decisionTrees.add(tree);
         }
     }
 
