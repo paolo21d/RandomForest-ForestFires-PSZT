@@ -25,7 +25,7 @@ public class DecisionTree {
     public void restoreNodesParent() {
         recursiveRestoreParent(null, root);
     }
-
+    
     private void recursiveRestoreParent(Node parent, Node currentNode) {
         if (currentNode == null)
             return;

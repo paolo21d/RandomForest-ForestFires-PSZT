@@ -101,12 +101,16 @@ public class Controller {
             RandomForest forest = new RandomForest();
             forest.buildRandomForest(trainSet);
 
+            Double MSE = 0.0;
             for (Sample sample : testSet) {
+                System.out.println("Oczekiwana " + sample.getResult() + " Przewidziana " + forest.getResult(sample));
                 Double err = (sample.getResult() - forest.getResult(sample));
-                loss += err * err;
+                MSE += (err * err);
             }
+            loss += (MSE/testSet.size());
+
         }
 
-        return loss / kFold;
+        return (loss / kFold);
     }
 }
