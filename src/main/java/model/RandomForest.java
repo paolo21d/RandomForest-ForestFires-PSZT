@@ -31,10 +31,8 @@ public class RandomForest {
 
             for (int j = 0; j < argumentNumber; j++) {
                 Argument.ArgumentType type = argumentTypes.get(rand.nextInt(argumentTypes.size()));
-                //Argument.ArgumentType type = argumentTypes.get(rand.nextInt(22));
                 while (argumentSample.contains(type)) {
                     type = argumentTypes.get(rand.nextInt(argumentTypes.size()));
-                    //type = argumentTypes.get(rand.nextInt(22));
                 }
 
                 argumentSample.add(type);

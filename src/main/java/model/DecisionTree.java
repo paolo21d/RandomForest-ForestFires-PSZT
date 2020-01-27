@@ -25,7 +25,7 @@ public class DecisionTree {
     public void restoreNodesParent() {
         recursiveRestoreParent(null, root);
     }
-    
+
     private void recursiveRestoreParent(Node parent, Node currentNode) {
         if (currentNode == null)
             return;
@@ -57,24 +57,12 @@ public class DecisionTree {
     }
 
     private Node ID3(List<Argument.ArgumentType> argumentTypes, List<Sample> samples, Node parent, Long depth) {
-        //System.out.println(depth);
-        //ilosc probek na tyle mala ze nie warto dzielić, przeuczenie
-        //głębokość duża
-        if (samples.size() <= 3 || depth >= maxDepth) {
-            Node leaf = new Node();
-            leaf.setParent(parent);
-            leaf.setSamples(samples);
-            leaf.countValue();
-            leaf.setMSE(countMSE(samples));
-            leaf.setSize(samples.size());
-            leaf.setSD(Math.sqrt(leaf.getMSE() / samples.size()));
-            return leaf;
-        }
-
-        //znalezienie argumentu podzialu
+        //find division argument
         Argument divisionArgument = findDivisionArgument(argumentTypes, samples);
 
-        if (divisionArgument == null) {
+        //too less samples - overfitting
+        //max tree depth
+        if (samples.size() <= 3 || depth >= maxDepth || divisionArgument == null) {
             Node leaf = new Node();
             leaf.setParent(parent);
             leaf.setSamples(samples);
@@ -96,7 +84,7 @@ public class DecisionTree {
             }
         }
 
-        //zbudowanie noda
+        //create node
         Node node = new Node();
         node.setParent(parent);
         node.setSamples(samples);
@@ -114,7 +102,6 @@ public class DecisionTree {
         return node;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private Argument findDivisionArgument(List<Argument.ArgumentType> argumentTypes, List<Sample> samples) {
         List<Triple<Argument.ArgumentType, Double, Double>> CFForArgumentTypes = new ArrayList<>(); //Pair<Argument Type, cost function for this argument type, division point>
 
@@ -136,10 +123,8 @@ public class DecisionTree {
                 divisionPoint = triple.getRight();
             }
         }
-        //System.out.println(countMSE(samples) + " " + minCF);
 
         if (countMSE(samples) <= minCF) {
-            //System.out.println("A tutaj co sie dzieje");
             return null;
         }
 
@@ -202,10 +187,8 @@ public class DecisionTree {
         int leftTreeSize = leftTree.size();
         int rightTreeSize = rightTree.size();
         int allTreeSize = leftTreeSize + rightTreeSize;
-        //System.out.println(countMSE(leftTree) + " " + leftTreeSize + " " + countMSE(rightTree) + " " + rightTreeSize + " " + allTreeSize);
         Double left = countMSE(leftTree) * ((double) leftTreeSize / (double) allTreeSize);
         Double right = countMSE(rightTree) * ((double) rightTreeSize / (double) allTreeSize);
-        //System.out.println(left + right);
         return left + right;
     }
 

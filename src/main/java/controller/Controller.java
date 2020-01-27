@@ -9,7 +9,6 @@ import model.Sample;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Controller {
 
@@ -17,29 +16,8 @@ public class Controller {
         try {
             SamplesImporter importer = new SamplesImporter();
             List<Sample> samples = importer.readSamplesFromFile("src/main/resources/dataToRead.txt");
-            //saveForest();
-            //RandomForest forest = loadForest();
-            //RandomForest forest = new RandomForest();
-            //forest.buildRandomForest(samples);
-            //SamplesImporter samplesImporter = new SamplesImporter();
-            //Double mean;
-
-            //samples = samplesImporter.readSamplesFromFile("src/main/resources/dataToTest");
-            /*for (Sample sample : samples) {
-                Double result = forest.getResult(sample);
-                System.out.println("Oczekiwana: " + sample.getResult() + " Przewidziana " + result);
-            }
-
-             */
-
-            //forest.saveStructure();
 
             System.out.println(crossValidation(10, samples));
-
-
-            //result();
-            //saveForest();
-            //System.out.println(result());
             System.out.println("END");
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +57,6 @@ public class Controller {
             System.out.println("Oczekiwana: " + sample.getResult() + " Przewidziana " + result);
         }
         return 0.0;
-        //return tree.getResult(sample);
     }
 
     private static Double crossValidation(Integer kFold, List<Sample> samples) {
@@ -107,7 +84,7 @@ public class Controller {
                 Double err = (sample.getResult() - forest.getResult(sample));
                 MSE += (err * err);
             }
-            loss += (MSE/testSet.size());
+            loss += (MSE / testSet.size());
 
         }
 
