@@ -53,10 +53,10 @@ public class DecisionTree {
     }
 
     public void buildTree(List<Argument.ArgumentType> argumentTypes, List<Sample> samples) {
-        root = ID3(argumentTypes, samples, null, 0L);
+        root = CART(argumentTypes, samples, null, 0L);
     }
 
-    private Node ID3(List<Argument.ArgumentType> argumentTypes, List<Sample> samples, Node parent, Long depth) {
+    private Node CART(List<Argument.ArgumentType> argumentTypes, List<Sample> samples, Node parent, Long depth) {
         //find division argument
         Argument divisionArgument = findDivisionArgument(argumentTypes, samples);
 
@@ -96,8 +96,8 @@ public class DecisionTree {
         if (left.size() == 0 || right.size() == 0) {
             return node;
         }
-        node.setLowerSon(ID3(argumentTypes, left, node, depth + 1));
-        node.setBiggerSon(ID3(argumentTypes, right, node, depth + 1));
+        node.setLowerSon(CART(argumentTypes, left, node, depth + 1));
+        node.setBiggerSon(CART(argumentTypes, right, node, depth + 1));
 
         return node;
     }
